@@ -20,12 +20,12 @@ namespace Stock.Controllers.Material
 
         public int SynchronousStock(string MerchantCode, string MaterialCode, int GoodsCount, bool OrderSubmitOrCanceled)
         {
-            TestingMaterialHelper query = RedisVM.SynchronousStock(MerchantCode, MaterialCode, GoodsCount, OrderSubmitOrCanceled);
+             TestingMaterialHelper query = RedisVM.SynchronousStock(MerchantCode, MaterialCode, GoodsCount, OrderSubmitOrCanceled);
             if (query.Result == 2)//Redis库存不存在
             {
                 var vm = CreateVM<MaterialVM>();
                 var result = vm.SynchronousStockMySql(MerchantCode, MaterialCode, GoodsCount, OrderSubmitOrCanceled);
-                //return Json(result, JsonRequestBehavior.AllowGet);
+              
                 return result;
             }
             else if (query.Result == 1)
