@@ -1,0 +1,35 @@
+﻿@model  Stock.ViewModel.MaterialVMs.MerchantListVM
+@(
+    UI.Container().VBoxLayout().Items
+    (
+            UI.Form().Flex(1).DefaultLabelWidth(100).Items
+            (
+                UI.SearchForm(x => x).LinkedGridID("MerchantGrid").Hidden(true).InnerWidth(750).Items
+                (
+                            UI.TextBox(x => x.Searcher.MerchantName),
+                            UI.TextBox(x => x.Searcher.MerchantNo),
+                            UI.TextBox(x => x.SessionID)
+                ),
+                UI.Grid(x => x).ID("MerchantGrid").SelectionMode(SelectionModeEnum.SINGLE)
+            ).Buttons
+            (
+                UI.Button().EventInline("click", "ReruenSelectValue('MerchantGrid')").ButtonText("确认")
+            )
+    ).RenderHtml()
+)
+
+<script>
+    function ReruenSelectValue(gridid) {
+        var grid = Ext.getCmp(gridid);
+        var sels = grid.getSelectionModel().getSelection();
+        if (sels.length == 1) {
+            SetMerchant(sels);
+     
+            @Scripts.CloseDialog("SelectMerchant")
+        }
+        else {
+            Ext.Msg.alert("提示", "请选择一条数据!");
+            return false;
+        }
+    }
+</script>

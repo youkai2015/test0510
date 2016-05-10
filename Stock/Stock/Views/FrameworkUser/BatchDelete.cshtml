@@ -1,0 +1,12 @@
+﻿@model Stock.ViewModel.Framework.FrameworkUserVMs.FrameworkUserBatchVM
+
+@(
+ UI.Form().Size(750, 400).Items(
+        UI.Display().Value(Language.DeleteConfirm),
+        UI.SimpleGrid(x => x.ListVM).Flex(1).Size(null, 400),
+        UI.Hidden(x => x.IDs)
+    ).Buttons(
+        UI.SubmitButton().ButtonText(Language.Delete),
+        UI.CloseButton()
+    ).RenderHtml()
+)

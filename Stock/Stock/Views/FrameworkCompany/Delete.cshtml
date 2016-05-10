@@ -1,0 +1,14 @@
+﻿@model Stock.ViewModel.Framework.FrameworkCompanyVMs.FrameworkCompanyVM
+
+@(
+    UI.Form().Size(500,null).Items(
+        UI.Text(Language.DeleteConfirm),
+        UI.Display(x=>x.Entity.CompanyCode),
+        UI.MLDisplay(x=>x.Entity, y=>y.CompanyName),
+        UI.Hidden(x=>x.Entity.ID).InputID("ID")
+    )
+    .Buttons(
+        UI.SubmitButton().ButtonText(Language.Delete),
+        UI.CloseButton()
+    ).RenderHtml()
+)

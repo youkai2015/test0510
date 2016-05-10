@@ -1,0 +1,61 @@
+﻿@model Stock.ViewModel.MaterialVMs.MaterialVM
+@(
+   UI.Container().Size(500, 200).Items(
+       UI.Form().ID("sdForm").DefaultLabelWidth(80).Items(
+           UI.FieldContainer().HBoxLayout().Items(
+               UI.Hidden(x => x.Entity.MerchantID).ID("MerchantID"),
+               UI.Hidden(x => x.Entity.MerchantCode).ID("MerchantCode").ID("MerchantCode"),
+               UI.TextBox(x => x.Entity.MerchantName).ID("MerchantName").ReadOnly(),
+               UI.Button().EventInline("click", Scripts.OpenDialog("/Material/SelectMerchant", "选择商户", dialogID: "SelectMerchant", height: 400, width: 600).ToString()).Icon("/Content/images/search.png").IconAlign(IconAlignEnum.Left).MaxWidth(100).ButtonText("选择商户").Margin("0 0 0 10")
+           ),
+            UI.FieldContainer().VBoxLayout().Items(
+                 UI.TextBox(x => x.Entity.GoodsName),
+                 UI.TextBox(x => x.Entity.MaterialCode)
+               ),
+           UI.FieldContainer().VBoxLayout().Items(
+                  UI.TextBox(x => x.Entity.Specification),
+                  UI.Number(x => x.Entity.StockNumber).ValueRange(0, null)
+                   ////UI.Upload(x => x.Entity.PicID).ID("fileUpload").FileType(UploadTypeEnum.ImageFile).UploadConfig(SaveFileModeEnum.Database),
+                   //UI.Button().ButtonText("预览").Size(100, null).Event("click", "UploadImg")
+                  )
+           ).Buttons(
+                  UI.SubmitButton(),
+                  UI.CloseButton()
+           )
+       ).RenderHtml()
+)
+<script type="text/javascript">
+
+    function SetMerchant(data) {
+        Ext.getCmp("MerchantName").setValue(data[0].data.MerchantName);
+        Ext.getCmp("MerchantCode").setValue(data[0].data.MerchantCode);
+        Ext.getCmp("MerchantID").setValue(data[0].data.MerchantID);
+     
+        @*Ext.getCmp("sdForm").add(Ext.widget('uploadfield', { csname: data[0].data.MerchantCode, saveMode: "1",
+            picMaxWidth :@int.MaxValue,picMaxHeight:@int.MaxValue,
+            file_types:"*.jpg;*.jpeg;*.gif;*.bmp;*.png;*.tif",text_complete:"上传完毕",
+            text_error:"您只能选择一个文件上传",text_ready:"请选择一个文件上传",
+            text_save:"保存中",text_sizeerror:"上传文件过大，允许的最大值是",text_stop:"中断",
+            text_titleerror:"错误",text_upload:"上传中",fieldname:"PicID",name:"Entity.PicID",fieldLabel:"PicID：",xtype:"uploadfield"
+
+        }));*@//单个图片上传
+    }
+     @*Ext.getCmp("sdForm").add(Ext.widget("myeditor",{picMaxWidth:@int.MaxValue,picMaxHeight:@int.MaxValue,}));*@//富文本编辑器
+    //var Mvalue = Ext.getCmp("test").body.getById("Searcher_MerchantCode").getValue();
+    //var Cvalue = Ext.getCmp("MerchatCode").getValue();
+    //Ext.getCmp("MerchantNameValue").setValue(Mvalue);
+    //Ext.getCmp("MerchatCodeValue1").setValue(Cvalue);
+   
+    //上传图片的通用方法
+    function UploadImg() {
+        var upload = Ext.getCmp("sdForm").getForm().findField("Entity.PicID");
+        var id = upload.getValue();
+        if (id == "") {
+            Ext.Msg.alert("警告", "不插入图片无法预览");
+        }
+        else {
+            var params = { id: id, MerchantCode: Ext.getCmp("MerchantCode").getValue() };
+            @Scripts.OpenDialog("/WebApi/Home/ViewAttachment", "title",method:"post",width:300,height:300).SetVariable(4,"params")
+        }
+    }
+</script>

@@ -1,0 +1,20 @@
+﻿@model Stock.ViewModel.HomeVMs.LoginVM
+
+@(
+ UI.Container().CenterLayout().Items(
+    UI.Form().Title(Language.PleaseLogin).ShowHeader(true).Collapsible(false).Size(340, null).Frame(true).Items(
+        UI.TextBox(x => x.ITCode),
+        UI.TextBox(x => x.Password).InputType("password")
+        //UI.TreeComboBox(x => x.money, x => x.AllTree).Required(false),
+        //UI.Number(x=>x.money).DecimalPrecision(0),
+        //, UI.DetailGrid(x => x.MoneyList).ReadOnly(false).DetailColumns(
+        //        x => x.DetailCol(y => y.testMoney).Editor(UI.TreeComboBox().TreeComboboxData(Model.AllTree)).DefaultValue("0eec5896-0037-4c15-b596-5e57d6cae842")
+        //)
+    )
+    .Buttons(
+        UI.SubmitButton().ButtonText("登陆")
+    )
+).RenderHtml()
+)
+
+@*<div>asdf</div>*@

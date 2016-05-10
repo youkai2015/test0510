@@ -1,0 +1,25 @@
+﻿@model Stock.ViewModel.Framework.FrameworkUserVMs.FrameworkUserListVM
+
+@(
+ UI.Container().VBoxLayout().Items(
+    UI.SearchForm(x => x).InnerWidth(750).ShowCommonConditions(true).IsPostBack(false).Items(
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.TextBox(x => x.Searcher.ITCode),
+            UI.TextBox(x => x.Searcher.Name)
+        ),
+        UI.FieldContainer().HBoxLayout().InnerFlex(1).Items(
+            UI.TextBox(x => x.Searcher.Email),
+            //UI.TextBox(x => x.Searcher.Type),
+            //UI.DateAndTime(x=>x.Searcher.StartCreateTime),
+            //UI.DateAndTime(x=>x.Searcher.EndCreateTime),
+            UI.ComboBox(x => x.Searcher.IsValid, Utils.GetBoolCombo(BoolComboTypes.ValidInvalid)).EmptyText(Language.All).ID("isvalid")
+        )
+        //,
+        //UI.FieldContainer().HBoxLayout().InnerFlex(1).Items(
+        //    UI.ComboBox(x => x.Searcher.CompanyID, x => x.Searcher.AllCompanys).LinkedChanged("DepartmentID", "/Ajax/GetDepartmentByCompanies").EmptyText(Language.All),
+        //    UI.ComboBox(x => x.Searcher.DepartmentID, x => x.Searcher.AllDepartments).EmptyText(Language.All)
+        //)
+    ),
+    UI.Grid()
+    ).RenderHtml()
+)

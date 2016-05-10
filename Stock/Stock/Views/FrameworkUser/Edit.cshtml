@@ -1,0 +1,50 @@
+﻿@model Stock.ViewModel.Framework.FrameworkUserVMs.FrameworkUserVM
+
+@(
+ UI.Container().VBoxLayout().Size(550, null).Items(
+    UI.Form().DefaultLabelWidth(100).Flex(1).Items(
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.TextBox(x => x.Entity.ITCode),
+            UI.TextBox(x => x.Entity.Password).InputType("password")
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.TextBox(x => x.Entity.Name)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.TextBox(x => x.Entity.WorkPhone),
+            UI.TextBox(x => x.Entity.CellPhone)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.TextBox(x => x.Entity.HomePhone),
+            UI.TextBox(x => x.Entity.Fax)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.TextBox(x => x.Entity.Email),
+            UI.TextBox(x => x.Entity.ZipCode)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.TextBox(x => x.Entity.Address)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.ComboBox(x => x.CompanyID, x => x.AllCompanys).EmptyText(Language.PleaseSelect),
+            UI.ComboBox(x => x.Entity.DepartmentID, x => x.AllDepartments).EmptyText(Language.PleaseSelect)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.DateAndTime(x => x.Entity.StartWorkDate),
+            UI.Checkbox(x => x.Entity.IsValid)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.DoubleList(x => x.SelectedRolesIDs, x => x.AllRoles).MaxHeight(250).Flex(1).EmptyText(Language.All)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            
+             UI.Upload(x => x.Entity.PhotoID).FileType(UploadTypeEnum.ImageFile).UploadConfig(SaveFileModeEnum.Database),
+                   UI.Button().ButtonText("预览").Size(100, null).Event("click", "UploadImg")
+        ),
+        UI.Hidden(x => x.Entity.ID)
+    ).Buttons(
+        UI.SubmitButton(),
+        UI.CloseButton()
+    )
+).RenderHtml()
+)

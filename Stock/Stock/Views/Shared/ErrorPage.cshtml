@@ -1,0 +1,26 @@
+﻿@model ErrorVM
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>CodeArt Framework</title>
+</head>
+<body>
+    @if (Configs.IsQuickDebug)
+    {
+        <div style="height:100%">
+            <div style='height: 35px;padding-left: 35px;line-height:35px;font-size: 14px;font-weight:bolder'>
+                @Language.AppError
+            </div>
+            <div>
+                @Model.Exception.Message
+            </div>
+        </div>
+    }
+    else
+    {
+        <div align="center"><img src="~/Content/Images/error.jpg" /></div>
+    }
+</body>
+</html>

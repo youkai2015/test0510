@@ -1,0 +1,15 @@
+﻿@model Stock.ViewModel.MaterialVMs.MaterialVM
+@(
+    UI.Container().VBoxLayout().Size(300, 100).Items(
+    UI.Form().ID("SubmitForm").DefaultLabelWidth(120).Flex(1).Items(
+        UI.FieldContainer().Margin(10).HBoxLayout().Items(
+             UI.TextBox(x => x.Entity.MerchantCode).Hidden(),
+             UI.Text("确定要删除该条数据吗？"),
+             UI.Hidden(x => x.Entity.ID).InputID("ID")
+        )
+    ).Buttons(
+             UI.SubmitButton(),
+             UI.CloseButton()
+    )
+).RenderHtml()
+)

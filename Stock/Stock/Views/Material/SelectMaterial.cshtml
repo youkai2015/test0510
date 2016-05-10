@@ -1,0 +1,93 @@
+﻿@model  Stock.ViewModel.MaterialVMs.SelectMaterialVM
+
+@(
+ UI.Container().VBoxLayout().Size(850, 600).Items(
+                UI.SearchForm(x => x.SelectMaterialListVM).DefaultLabelWidth(100).ShowResetButton(false).LinkedGridID("MaterialListGrid").Items(
+                UI.FieldContainer().HBoxLayout().InnerFlex(1).Items(
+                UI.TextBox(x => x.SelectMaterialListVM.Searcher.GName),
+                UI.TextBox(x => x.SelectMaterialListVM.Searcher.Material),
+                UI.TextBox(x => x.SelectMaterialListVM.Searcher.Spec),
+                UI.Hidden(x => x.SelectMaterialListVM.Searcher.ParentID),
+                UI.Hidden(x => x.Entity.MerchantCode)
+            )
+        ),
+        UI.Grid(x => x.SelectMaterialListVM).Flex(1).HasCheckBox(false).ID("MaterialListGrid"),
+
+            UI.Form().ID("ChildForm").DefaultLabelWidth(100).Size(600, null).Items(
+                UI.Hidden(x => x.Entity.ID),
+                UI.FieldContainer().HBoxLayout().Items(
+                    UI.TextBox(x => x.Entity.MaterialCode).ReadOnly().Label("父物料"),
+                    UI.TextBox(x => x.Entity.Specification).ReadOnly(),
+                    UI.TextBox(x => x.Entity.MerchantCode).ReadOnly()
+                ),
+
+
+                UI.FieldContainer().VBoxLayout().Items(
+                    UI.DetailGrid(x => x.Entity.MaterialDetails).ShowAddButton(false).ID("ChildGrid").DetailColumns(
+                        x => x.DetailCol(y => y.MaterialID).ColHidden(true),
+                        x => x.DetailCol(y => y.ChildMaterialID).ColHidden(true),
+                        x => x.DetailCol(y => y.ChildMaterialCode).ColWidth(550),
+                        x => x.DetailCol(y => y.Specification).ColWidth(100)
+                ).Title("子物料")
+                )
+        )
+        .Buttons(
+            UI.SubmitButton(),
+            UI.CloseButton()
+        )
+    ).RenderHtml()
+)
+
+<script type="text/javascript">
+    
+    var form = Ext.getCmp('ChildForm').getForm();
+    var pid = form.findField('Entity.ID').getValue();
+
+    function Select() {
+        debugger;
+        setTimeout(function () {
+            var grid = Ext.getCmp('MaterialListGrid');
+            var sels = grid.getSelectionModel().getSelection();
+            if (sels.length != 1) {
+                Ext.Msg.alert("警告", "请选择一条数据!");
+                return false;
+            }
+            SetSelectValue(sels);
+        }, 1);
+    }
+
+    function SetSelectValue(dlist) {
+
+        var store = Ext.getCmp("ChildGrid").getStore();
+        GridAddRow(dlist, store, pid);
+    }
+
+
+    function GridAddRow(dlist, store) {
+
+        var modelName = store.getModel().getName();
+        var plist = [];
+        if (store.data.length > 0)
+            Ext.each(store.data.items, function (item) {
+                plist.push(item.data.ChildMaterialID);
+            });
+        $.each(dlist, function (n2, v2) {
+            if (!plist.contains(v2.data.ID)) {
+                var r = Ext.create(modelName, dlist);
+                var guid = FF_uuid();
+                r.id = guid;
+                r.data.ID = guid;
+                r.data.MaterialID = pid;
+                r.data.ChildMaterialID = v2.data.ID;
+                r.data.ChildMaterialCode = v2.data.MaterialCode;
+                r.data.Specification = v2.data.Specification;
+                store.insert(0, r);
+            }
+        });
+    }
+
+    /*判断数组是否存在某个数值*/
+    Array.prototype.contains = function (item) {
+        return RegExp(item).test(this);
+    };
+</script>

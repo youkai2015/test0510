@@ -1,0 +1,37 @@
+﻿@model Stock.ViewModel.HomeVMs.MainMenuVM
+
+@(
+ UI.AddComponent("DONOTUSE_MENU", UI.Tree(Model.MenuData).ShowHeader(false).ID("DONOTUSE_MAINMENU").Event("itemclick", "Menu_Click").EventInline("afterrender", "DONOTUSE_MENUREADY = true;"))
+)
+
+<script>
+    function Menu_Click (view, rec, item, index, eventObj) {
+        FF_DeactiveAllMenuItem();
+        var url = rec.get('url');
+        var tag = rec.get('tag2');
+        var domainid = rec.get('tag1')
+        if (url != null && url != "") {
+            DONOTUSE_ISCTRL = eventObj.ctrlKey;
+            if (tag == null || tag == "") {
+                if (domainid != null && domainid != undefined && domainid != "") {
+                    $.get("@Configs.VirtualDir"+"/WebApi/Home/LoadOutsidePage?url=" + encodeURIComponent(url) + "&domainid=" + domainid + "&eventts=" + new Date().getTime(), "", function (data) {
+                        $("#DONOTUSE_HIDDENPOSTDIV").html(data);
+                    });
+                }
+                else {
+                    if (url.indexOf('/') == 0) {
+                        FF_LoadPage(encodeURIComponent(url), null, null, null);
+                    }
+                    else {
+                        FF_LoadPage(encodeURIComponent(url), null, null, 0);
+                    }
+                }
+            }
+            else {
+                FF_OpenDialog("/WebApi/Home/Debug?url=" + encodeURIComponent(url) + "&pa=" + tag, "Debug Parameters", 300, 400);
+            }
+        }
+        view.getSelectionModel().select(rec, false, true);
+        return false;
+    }
+</script>

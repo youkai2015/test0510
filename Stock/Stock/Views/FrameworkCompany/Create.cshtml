@@ -1,0 +1,72 @@
+﻿@model Stock.ViewModel.Framework.FrameworkCompanyVMs.FrameworkCompanyVM
+
+@{
+    var companies = Model.DC.Set<Stock.Model.FrameworkCompany>().GetSelectListItemsForML(null, a => a, b => b.CompanyName, Model.LoginUserInfo.DataPrivileges);
+    var departments = Model.DC.Set<Stock.Model.FrameworkDepartment>().GetSelectListItemsForML(null, a => a, b => b.DepartmentName, Model.LoginUserInfo.DataPrivileges);
+
+    #region ���Դ���
+    //var userTypes = typeof(CodeArt.Models.Framework.UserTypeEnum).ToListItems();
+
+
+    //var AllTree = new List<TreeSelectListItem>();
+
+    //var parent1 = new TreeSelectListItem() { id = Guid.NewGuid().ToString(), text = "Parent1", children = new List<TreeSelectListItem>(), leaf = false };
+    //var parent2 = new TreeSelectListItem() { id = Guid.NewGuid().ToString(), text = "Parent2", children = new List<TreeSelectListItem>(), leaf = false };
+    //var parent3 = new TreeSelectListItem() { id = Guid.NewGuid().ToString(), text = "Parent3", children = new List<TreeSelectListItem>(), leaf = false };
+
+    //parent1.children.Add(new TreeSelectListItem() { id = Guid.NewGuid().ToString(), text = "child1-1", leaf = true });
+
+    //parent2.children.Add(new TreeSelectListItem() { id = Guid.NewGuid().ToString(), text = "child2-1", leaf = true });
+    //parent2.children.Add(new TreeSelectListItem() { id = Guid.NewGuid().ToString(), text = "child2-2", leaf = true });
+
+    //parent3.children.Add(new TreeSelectListItem() { id = Guid.NewGuid().ToString(), text = "child3-1", leaf = true });
+
+    //var child11 = new TreeSelectListItem() { id = Guid.NewGuid().ToString(), text = "child3-2", children = new List<TreeSelectListItem>(), leaf = false };
+    //child11.children.Add(new TreeSelectListItem() { id = "0eec5896-0037-4c15-b596-5e57d6cae842", text = "child3-2-1", leaf = true });
+    //child11.children.Add(new TreeSelectListItem() { id = Guid.NewGuid().ToString(), text = "child3-2-2", leaf = true });
+    //child11.children.Add(new TreeSelectListItem() { id = Guid.NewGuid().ToString(), text = "child3-2-3", leaf = true });
+
+    //parent3.children.Add(child11);
+    //parent3.children.Add(new TreeSelectListItem() { id = Guid.NewGuid().ToString(), text = "child3-3", leaf = true });
+
+    //AllTree.Add(parent1);
+    //AllTree.Add(parent2);
+    //AllTree.Add(parent3);
+    #endregion
+}
+@(
+ UI.Form().Size(600, null).Items(
+        UI.TextBox(x => x.Entity.CompanyCode),
+        UI.MLTextBox(x => x.Entity, y => y.CompanyName),
+        UI.MLTextBox(x => x.Entity, y => y.CompanyRemark, true).Size(null, 200).Flex(1),
+        UI.DetailGrid(x => x.Entity.Departments).Title(Language.Department).DetailColumns(
+            x => x.DetailCol(y => y.DepartmentCode),
+            x => x.DetailCol(y => y.UserType),
+            x => x.DetailCol(y => y.ParentID).Editor(UI.ComboBox().ComboboxData(departments))
+        ),
+        UI.DetailGrid(x => x.Entity.Photos).DetailColumns(
+            x => x.DetailCol(y => y.PhotoID).ColWidth(300).Editor(UI.Upload()),
+            x => x.DetailCol(y => y.Remark).ColFlex(1),
+            x => x.DetailViewCol(y => y.PhotoID).WindowTitle("�鿴ͼƬ"),
+            x => x.DetailDownloadCol(y => y.PhotoID)
+        )
+    )
+    .Buttons(
+        UI.SubmitButton(),
+        UI.CloseButton()
+    ).RenderHtml()
+)
+
+@*@(
+     UI.Form().Size(600, null).Items(
+            UI.DetailGrid(x => x.Entity.Departments).Title(Language.Department).DetailColumns(
+                x => x.DetailCol(y => y.DepartmentCode).DefaultValue("test").Editor(UI.TextBox()),
+                x => x.DetailCol(y => y.UserType).Editor(UI.TreeComboBox().Flex(1).InputID("parentID")),
+                x => x.DetailCol(y => y.ParentID).Editor(UI.TreeComboBox().TreeComboboxData(AllTree).Flex(1).LinkedChanged("parentID", "/Ajax/GetTest2"))
+            )
+        )
+        .Buttons(
+            UI.SubmitButton(),
+            UI.CloseButton()
+        )
+    )*@

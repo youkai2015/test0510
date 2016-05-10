@@ -1,0 +1,15 @@
+﻿@model Stock.ViewModel.Framework.FrameworkDepartmentVMs.FrameworkDepartmentVM
+
+@(
+ UI.Form().Size(500, null).Flex(1).Items(
+        UI.Text(Language.DeleteConfirm),
+        UI.Display(x => x.Entity.DepartmentCode),
+        UI.MLDisplay(x => x.Entity.Company, y => y.CompanyName),
+        UI.MLDisplay(x => x.Entity, y => y.DepartmentName),
+        UI.Hidden(x => x.Entity.ID).InputID("ID")
+    )
+    .Buttons(
+        UI.SubmitButton().ButtonText(Language.Delete),
+        UI.CloseButton()
+    ).RenderHtml()
+)

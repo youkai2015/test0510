@@ -1,0 +1,16 @@
+﻿@model ErrorVM
+
+
+@{
+    var form = UI.Form().Size(500, null).Items(
+        UI.Text("<div class='x-message-box-error' style='height: 35px;padding-left: 35px;line-height:35px;font-size: 14px;font-weight:bolder'>" + Language.AppError + "</div>"),
+        UI.Display(x => x.Exception.Message).Size(null, 100).Label(Language.Message)
+    );
+    if (Configs.IsQuickDebug)
+    {
+        form.Items(
+            UI.TextArea(x => x.Exception).Size(null, 130).ReadOnly(true).Flex(1).Label(Language.DebugInfo)
+            );
+    }
+}
+@form.RenderHtml()

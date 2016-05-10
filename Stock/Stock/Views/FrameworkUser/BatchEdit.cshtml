@@ -1,0 +1,16 @@
+﻿@model Stock.ViewModel.Framework.FrameworkUserVMs.FrameworkUserBatchVM
+
+@(
+ UI.Form().Size(750, 500).Flex(1).Items(
+    UI.Text(Language.BatchEdit),
+    UI.Container().VBoxLayout().Items(
+        UI.TextBox(x => x.LinkedVM.Password).InputType("password").WithCheckBox(),
+        UI.ComboBox(x => x.LinkedVM.IsValid, Utils.GetBoolCombo(BoolComboTypes.ValidInvalid)).EmptyText(Language.PleaseSelect).WithCheckBox()
+    ),
+    UI.Hidden(x => x.IDs),
+    UI.SimpleGrid(x => x.ListVM).Flex(1)
+    ).Buttons(
+        UI.SubmitButton(),
+        UI.CloseButton()
+    ).RenderHtml()
+)

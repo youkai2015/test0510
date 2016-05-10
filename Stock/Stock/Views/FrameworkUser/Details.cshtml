@@ -1,0 +1,45 @@
+﻿@model Stock.ViewModel.Framework.FrameworkUserVMs.FrameworkUserVM
+
+@(
+ UI.Container().VBoxLayout().Size(550, null).Items(
+    UI.Form().DefaultLabelWidth(100).Flex(1).Items(
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.Display(x => x.Entity.ITCode),
+            UI.Display(x => x.Entity.Name)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.Display(x => x.Entity.WorkPhone),
+            UI.Display(x => x.Entity.CellPhone)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.Display(x => x.Entity.HomePhone),
+            UI.Display(x => x.Entity.Fax)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.Display(x => x.Entity.Email),
+            UI.Display(x => x.Entity.ZipCode)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.Display(x => x.Entity.Address)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.Display(x => x.Entity.Department.Company.CompanyCode),
+            UI.Display(x => x.Entity.Department.DepartmentCode)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.Display(x => x.Entity.StartWorkDate).DateFormat("Y-m-d"),
+            UI.DisplayBool(x => x.Entity.IsValid, BoolComboTypes.YesNo)
+
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.DoubleList(x => x.SelectedRolesIDs, x => x.AllRoles).MaxHeight(250).Flex(1).ReadOnly().EmptyText(Language.All)
+        ),
+        UI.FieldContainer().HBoxLayout().Items(
+            UI.AttachmentView(x => x.Entity.PhotoID, ButtonTypesEnum.Link, 600, 600).Margin("0 5 0 0"),
+            UI.AttachmentDownload(x => x.Entity.PhotoID, ButtonTypesEnum.Link)
+        )
+    ).Buttons(
+        UI.CloseButton()
+    )
+).RenderHtml()
+)

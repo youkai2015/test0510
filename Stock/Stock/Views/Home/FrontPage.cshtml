@@ -1,0 +1,24 @@
+﻿@*@UI.Container().BorderLayout().Items(
+    UI.Component().Html("HelloWorld").Style(new { background_Color = "blue", color = "white" }).Region(RegionEnum.East),
+    UI.Component().Html("123").Style(new { background_Color = "black", color = "white" }).Region(RegionEnum.West),
+    UI.Container().Region(RegionEnum.Center).VBoxLayout().Items(
+        UI.Panel().Title("This is a test").Buttons(
+            UI.Button().ButtonText("aaa").Event("click", "testclick"),
+            UI.Button().ButtonText("bbb")
+        ),
+        //UI.Checkbox().BoxLabel("这是个测试1").BoxLabelAlign("after").Checked(true).ReadOnly(true),
+        //UI.Checkbox().BoxLabel("这是个测试2").BoxLabelAlign("after").ReadOnly(true),
+        //UI.Checkbox().BoxLabel("这是个测试3").BoxLabelAlign("before").Checked(true).ReadOnly(false),
+
+        UI.Panel().Flex(1).Title("test")
+    )
+)*@
+@UI.HtmlEditor().RenderHtml()
+
+<script>
+    function testclick() {
+        @Scripts.OpenDialog("/FrameworkUser/Index", "aaa", 500, 500);
+    }
+    //系统通知功能
+    @(Configs.EnableNotice?"FF_GetSystemNotices();":"")
+</script>

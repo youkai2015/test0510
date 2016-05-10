@@ -1,0 +1,15 @@
+﻿@model Stock.ViewModel.Framework.FrameworkDepartmentVMs.FrameworkDepartmentListVM
+
+
+@(
+ UI.Container().VBoxLayout().Items(
+    UI.SearchForm(x => x).DefaultLabelWidth(100).InnerWidth(800).ShowCommonConditions(true).Items(
+    UI.FieldContainer().HBoxLayout().InnerFlex(1).Items(
+            UI.TextBox(x => x.Searcher.DepartmentCode),
+            UI.ComboBox(x => x.Searcher.CompanyID, x => x.Searcher.AllCompanys).EmptyText(Language.All),
+            UI.TextBox(x => x.Searcher.DepartmentName)
+        )
+    ),
+    UI.TreeGrid(x => x)
+).RenderHtml()
+)

@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>WalkingTec MVVM Framework</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    @*<meta http-equiv="X-UA-Compatible" content="IE=Edge">*@
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    @UI.EmmitCSS()
+    <link href="~/Content/header_style.css" rel="stylesheet" type="text/css" />
+    @UI.EmmitJS()
+    @UI.EmmitStartup()
+</head>
+<body>
+    <div id="topbar" style="height:100%">@{Html.RenderAction("TopBar", "Home");}</div>
+    @(UI.ViewPort().BorderLayout().RenderTo("")
+        .Items(
+            UI.Container().ContentElementID("topbar").Size(null, 65).Region(RegionEnum.North),
+            UI.Panel().FitLayout().ID("DONOTUSE_MENU").Split(true).Title(Language.Menu).Size(200, null).MinSize(100, null).MaxSize(400, null).Region(RegionEnum.West),
+            UI.Container().ID("DONOTUSE_MAINPANEL").FitLayout().Region(RegionEnum.Center)
+        ).RenderHtml()
+    )
+    <script>
+        $.get("@Configs.VirtualDir"+"/Home/Menu", function (data) {
+            $("body").append(data);
+        });
+    </script>
+    @RenderBody()
+</body>
+</html>

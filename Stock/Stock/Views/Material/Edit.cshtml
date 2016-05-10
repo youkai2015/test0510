@@ -1,0 +1,42 @@
+﻿@model Stock.ViewModel.MaterialVMs.MaterialVM
+@(
+UI.Container().Size(500, 210).Items(
+       UI.Form().ID("sdForm").DefaultLabelWidth(80).Items(
+           UI.FieldContainer().VBoxLayout().Items(
+                 UI.TextBox(x => x.Entity.GoodsName),
+                 UI.TextBox(x => x.Entity.MaterialCode)
+               ),
+       UI.FieldContainer().VBoxLayout().Items(
+                  UI.TextBox(x => x.Entity.Specification),
+                  //  UI.Upload(x => x.Entity.PicID).FileType(UploadTypeEnum.ImageFile).UploadConfig(SaveFileModeEnum.Database),
+                  //UI.Button().ButtonText("预览").Size(100, null).Event("click", "UploadImg"),
+                  UI.Number(x => x.Entity.StockNumber)
+                  ),
+       UI.FieldContainer().VBoxLayout().Items(
+                  UI.TextBox(x => x.Entity.MerchantName).ReadOnly()
+
+                  ),
+       UI.Hidden(x => x.Entity.ID),
+       UI.Hidden(x => x.Entity.MerchantCode).ID("code")
+           ).Buttons(
+                 UI.SubmitButton(),
+                 UI.CloseButton()
+           )
+       ).RenderHtml()
+)
+
+
+<script type="text/javascript">
+    var upload = Ext.getCmp("sdForm").getForm().findField("Entity.PicID");
+    //上传图片的通用方法
+    function UploadImg() {
+        var id = upload.getValue();
+        if (id == "") {
+            Ext.Msg.alert("警告", "不插入图片无法预览");
+        }
+        else {
+            var params = { id: id, MerchantCode: Ext.getCmp("code").getValue() };
+            @Scripts.OpenDialog("/WebApi/Home/ViewAttachment", "title",method:"post",width:300,height:300).SetVariable(4,"params")
+        }
+    }
+</script>

@@ -1,0 +1,14 @@
+﻿@model Stock.ViewModel.MaterialVMs.MaterialListVM
+@(
+ UI.Container().VBoxLayout().Items(
+    UI.SearchForm(x => x).DefaultLabelWidth(100).InnerWidth(800).ShowCommonConditions(true).Items(
+    UI.FieldContainer().HBoxLayout().InnerFlex(1).Items(
+        UI.ComboBox(x=>x.Searcher.MerchantCode,x=>x.Searcher.AllMerchant).ID("MerchatCode"),
+        UI.TextBox(x=>x.Searcher.MaterialCode),
+        UI.TextBox(x=>x.Searcher.GoodsName)
+        )
+    ),
+    UI.Grid(x => x).AutoSearch(false)
+).RenderHtml()
+)
+

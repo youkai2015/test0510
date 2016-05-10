@@ -1,0 +1,19 @@
+﻿@model Stock.ViewModel.MaterialVMs.MaterialImportVM
+
+@(
+ UI.Container().VBoxLayout().Size(550, null).Items(
+     UI.Form().Flex(1).AutoScroll().Items(
+            UI.Text(Language.BatchImport),
+            UI.Container().HBoxLayout().Items(
+                UI.DownloadTemplateButton(),
+                UI.Text("    ").Size(10, null),
+                UI.Upload(null).Required().Flex(1)
+            ),
+            UI.SimpleGrid(x => x.ErrorListVM).Flex(1)
+        )
+        .Buttons(
+            UI.SubmitButton().ButtonText(Language.BatchImport),
+            UI.CloseButton()
+        )
+ ).RenderHtml()
+)

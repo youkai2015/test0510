@@ -1,0 +1,14 @@
+﻿@model Stock.ViewModel.Framework.FrameworkDepartmentVMs.FrameworkDepartmentBatchVM
+
+@(
+ UI.Form().Size(550, null).Flex(1).Items(
+ UI.Text(Language.NewData),
+ UI.Container().VBoxLayout().Items(),
+   UI.Hidden(x=>x.IDs),
+        UI.SimpleGrid(x => x.ListVM).Flex(1)     
+    ).Buttons(
+        UI.SubmitButton(),
+        UI.CloseButton()
+    ).RenderHtml()
+)
+

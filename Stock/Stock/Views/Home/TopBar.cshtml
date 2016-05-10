@@ -1,0 +1,39 @@
+﻿@model Stock.ViewModel.HomeVMs.TopBarVM
+<table class="header">
+    <tr>
+        <td>
+            <span style="font-size: 20px">WalkingTec.Mvvm </span>
+            @{
+                if (Configs.IsQuickDebug == true)
+                {
+                    <span style="color:red">QuickDebug Mode, Framework Version: @Configs.FrameworkVersion</span>
+                }
+            }
+        </td>
+        <td>
+            <div style="float:right; margin-left:5px;" id="languagecombodiv">
+            </div>
+            <div style="float:right;" class="topbar">
+                <span><img src="~/Content/Images/persion.png" /></span>
+                <span>@Model.UserName</span>
+                <span>@Model.MakeDialogButton(ButtonTypesEnum.Link, "/Login/ChangePassword", 400, null, null, Language.EditPassword)</span>
+                <span>|</span>
+                <span>@Model.MakeRedirectButton(ButtonTypesEnum.Link, "/Login/Logout", Language.Logout)</span>
+                <span>|</span>
+                <span> <a href="#" onclick="@Scripts.LoadPage("/Home/FrontPage");return false;">@Language.HomePage</a></span>
+                <span>|</span>
+                <span> <a href="#" onclick="@Scripts.OpenDialog("/Admin/FrameworkNotice/MessageIndex", Language.MyMessages, 890, 600);return false;">@Language.MyMessages</a></span>
+            </div>
+        </td>
+    </tr>
+</table>
+
+@UI.ComboBox(x => x.CurrentLanguageCode, x => x.AllLanguages).HideLabel(true).Size(120, null).RenderTo("languagecombodiv").Event("select", "changelanguage").RenderHtml();
+
+<script>
+    function changelanguage(combo, value) {
+        $.get("@Configs.VirtualDir/Home/ChangeLanguage?LanguageCode=" + value.get('v'), "", function (data) {
+            window.location.reload();
+        });
+    }
+</script>

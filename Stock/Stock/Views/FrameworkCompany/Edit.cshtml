@@ -1,0 +1,33 @@
+﻿@model Stock.ViewModel.Framework.FrameworkCompanyVMs.FrameworkCompanyVM
+
+@{
+    var companies = Model.DC.Set<Stock.Model.FrameworkCompany>().GetSelectListItemsForML(null, a => a, b => b.CompanyName, Model.LoginUserInfo.DataPrivileges);
+    var departments = Model.DC.Set<Stock.Model.FrameworkDepartment>().GetSelectListItemsForML(null, a => a, b => b.DepartmentName, Model.LoginUserInfo.DataPrivileges);
+}
+@(
+ UI.Container().VBoxLayout().Size(600, null).Items(
+    UI.Form().Flex(1).AutoScroll().Items(
+        UI.TextBox(x => x.Entity.CompanyCode),
+        UI.MLTextBox(x => x.Entity, y => y.CompanyName),
+        UI.MLTextBox(x => x.Entity, y => y.CompanyRemark, true).Size(null, 200).Flex(1),
+        UI.DetailGrid(x => x.Entity.Departments).MaxHeight(200).ShowDelInRow().ReadOnly(true).Title(Language.Department).DetailColumns(
+            x => x.DetailCol(y => y.DepartmentCode),
+            x => x.DetailCol(y => y.UserType).Editor(null),
+            x => x.DetailCol(y => y.ParentID).Editor(UI.ComboBox().ComboboxData(departments))
+        ),
+        UI.DetailGrid(x => x.Entity.Photos).MaxHeight(200).HasCheckBox(false).DetailColumns(
+            x => x.DetailCol(y => y.PhotoID).ColWidth(300).Editor(UI.Upload()),
+            x => x.DetailCol(y => y.Remark).ColFlex(1),
+            x => x.DetailViewCol(y => y.PhotoID)
+        ),
+        UI.Hidden(x => x.Entity.ID)
+    )
+    .Buttons(
+        UI.SubmitButton(),
+        UI.CloseButton()
+    )
+).RenderHtml()
+)
+
+
+

@@ -1,0 +1,13 @@
+﻿@model Stock.ViewModel.Framework.FrameworkCompanyVMs.FrameworkCompanyListVM
+
+@(
+ UI.Container().VBoxLayout().Items(
+ UI.SearchForm(x => x,gridID:"aaabbb").InnerWidth(550).ShowCommonConditions(true).Items(
+        UI.FieldContainer().HBoxLayout().InnerFlex(1).Items(
+            UI.TextBox(x=>x.Searcher.CompanyCode),
+            UI.TextBox(x=>x.Searcher.CompanyName)
+        )
+    ),
+    UI.Grid(x => x).ID("aaabbb")
+).RenderHtml()
+)

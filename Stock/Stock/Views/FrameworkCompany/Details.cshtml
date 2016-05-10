@@ -1,0 +1,12 @@
+﻿@model Stock.ViewModel.Framework.FrameworkCompanyVMs.FrameworkCompanyVM
+
+@(
+ UI.Form().Size(500, null).Items(
+        UI.Display(x => x.Entity.CompanyCode),
+        UI.MLDisplay(x => x.Entity, y => y.CompanyName),
+        UI.MLDisplay(x=>x.Entity,y=>y.CompanyRemark,true).Size(null,200).Flex(1)
+    )
+    .Buttons(
+        UI.CloseButton()
+    ).RenderHtml()
+)

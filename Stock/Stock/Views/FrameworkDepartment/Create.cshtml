@@ -1,0 +1,14 @@
+﻿@model Stock.ViewModel.Framework.FrameworkDepartmentVMs.FrameworkDepartmentVM
+
+@(
+ UI.Form().Size(400, null).Flex(1).Items(
+        UI.TextBox(x => x.Entity.DepartmentCode),
+        UI.MLTextBox(x => x.Entity, x => x.DepartmentName),
+        UI.ComboBox(x => x.Entity.CompanyID, x => x.AllCompanys).EmptyText(Language.PleaseSelect).Required(false).LinkedChanged("Entity.ParentID", "/Ajax/GetDepartmentByCompany"),
+        UI.TreeComboBox(x => x.Entity.ParentID, X => X.AllTreeCombo).CanSelectParent().EmptyText("请选择")
+    )
+    .Buttons(
+        UI.SubmitButton(),
+        UI.CloseButton()
+    ).RenderHtml()
+)

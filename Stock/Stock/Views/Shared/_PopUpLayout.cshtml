@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>WalkingTec MVVM Framework</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    @UI.EmmitCSS()
+    @UI.EmmitJS()
+    @UI.EmmitStartup()
+</head>
+<body>
+    @UI.ViewPort().FitLayout().ID("DONOTUSE_MAINPANEL").RenderTo("").RenderHtml()
+    @RenderBody()
+</body>
+</html>

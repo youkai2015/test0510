@@ -1,0 +1,16 @@
+﻿@model Stock.ViewModel.Framework.FrameworkDepartmentVMs.FrameworkDepartmentVM
+
+@(
+ UI.Form().Size(400, null).Items(
+            UI.TextBox(x => x.Entity.DepartmentCode),
+            UI.MLTextBox(x => x.Entity, y => y.DepartmentName),
+       UI.ComboBox(x => x.Entity.CompanyID, x => x.AllCompanys).EmptyText(Language.PleaseSelect).LinkedChanged("Entity.ParentID", "/Ajax/GetDepartmentByCompany"),
+
+        UI.TreeComboBox(x => x.Entity.ParentID, X => X.AllTreeCombo).InputID("Entity.ParentID"),
+        UI.Hidden(x => x.Entity.ID)
+    )
+    .Buttons(
+        UI.SubmitButton(),
+        UI.CloseButton()
+    ).RenderHtml()
+)

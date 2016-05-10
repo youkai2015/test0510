@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"  elementFormDefault="qualified" attributeFormDefault="unqualified" >
+    <xs:element name="WalkingTecMVVM">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="Common">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="UI" type="UI001" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="Storage" type="Storage001" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="DFSServer" type="DFSServer001" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="Languages" type="Language001" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="StaticFile" type="Static001" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="SystemLoop" type="SystemLoop001" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="EmailService" type="EmailService001" minOccurs="0" maxOccurs="1"/>
+                        </xs:all>
+                        <xs:attribute name="QuickDebug" type="BoolEnum" use="optional" />
+                        <xs:attribute name="WebSitePrefix" type="xs:string" use="optional" default="" />
+                        <xs:attribute name="EnableLog" type="BoolEnum" use="optional" />
+                        <xs:attribute name="CookiePrefix" type="xs:string" use="optional" />
+                        <xs:attribute name="MainDomain" type="xs:string" use="optional" />
+                        <xs:attribute name="VirtualDir" type="xs:string" use="optional" />
+                        <xs:attribute name="Proxy" type="xs:string" use="optional" />
+                        <xs:attribute name="MainMachine" type="BoolEnum" use="optional" />
+                        <xs:attribute name="SyncDb" type="BoolEnum" use="optional" default="false" />
+                        <xs:attribute name="NoRight" type="NoRightEnum" use="optional" default="Disable" />
+                        <xs:attribute name="EncryptKey" type="xs:string" use="optional" default="" />
+                        <xs:attribute name="RPP" type="xs:int" use="optional" default="20" />
+                        <xs:attribute name="EnableServiceMonitor" type="BoolEnum" use="optional" default="false" />
+                    </xs:complexType>
+                </xs:element>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="UI001">
+        <xs:attribute name="Style" type="StyleEnum" use="optional" />
+        <xs:attribute name="Theme" type="ThemeEnum" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="Storage001">
+        <xs:attribute name="StorageType" type="StorageEnum" use="required" />
+        <xs:attribute name="UploadDir" type="xs:string" use="optional" />
+        <xs:attribute name="TempExportDir" type="xs:string" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="SystemLoop001">
+        <xs:attribute name="EnableSystemLoop" type="BoolEnum" use="optional" default="false" />
+        <xs:attribute name="EnableOnlineCheck" type="BoolEnum" use="optional" default="false" />
+        <xs:attribute name="EnableMessage" type="BoolEnum" use="optional" default="false" />
+        <xs:attribute name="EnableNotice" type="BoolEnum" use="optional" default="false" />
+    </xs:complexType>
+    <xs:complexType name="EmailService001">
+        <xs:attribute name="UseThread" type="BoolEnum" use="required"/>
+        <xs:attribute name="SMTPServiceIP" type="xs:string" use="required"/>
+        <xs:attribute name="SMTPServicePort" type="xs:int" use="optional" default="25"/>
+        <xs:attribute name="EmailUserName" type="xs:string" use="required"/>
+        <xs:attribute name="EmailPassWord" type="xs:string" use="required"/>
+        <xs:attribute name="SenderAddress" type="xs:string" use="required"/>
+        <xs:attribute name="SenderName" type="xs:string" use="required"/>
+        <xs:attribute name="SleepTime" type="xs:double"  use="optional" default="5.0"/>
+        <xs:attribute name="EmailAttachmentLimit" type="xs:int"  use="optional" default="1"/>
+    </xs:complexType>
+    <xs:complexType name="DFSServer001">
+        <xs:all>
+            <xs:element name="TrackerServer" type="TrackerServer001" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="BusinessType" type="BusinessType001" minOccurs="1" maxOccurs="1"/>
+        </xs:all>
+        <xs:attribute name="IsNginx" type="BoolEnum" use="optional" default="false" />
+        <xs:attribute name="TrackerMaxConnection" type="xs:int" use="required" />
+        <xs:attribute name="StorageMaxConnection" type="xs:int" use="required" />
+        <xs:attribute name="ConnectionTimeout" type="xs:int" use="required" />
+        <xs:attribute name="ConnectionLifeTime" type="xs:int" use="required" />
+    </xs:complexType>
+    <xs:complexType name="Language001">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="add">
+                <xs:complexType>
+                    <xs:attribute name="Code" type="xs:string" use="optional" />
+                    <xs:attribute name="Text" type="xs:string" use="optional" />
+                    <xs:attribute name="IsDefault" type="BoolEnum" use="optional" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="remove">
+                <xs:complexType>
+                    <xs:attribute name="Code" type="xs:string" use="optional" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="clear">
+                <xs:complexType>
+                    <xs:anyAttribute namespace="http://schemas.microsoft.com/XML-Document-Transform" processContents="strict"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="Static001">
+        <xs:attribute name="Ext" type="xs:string" use="optional" />
+    </xs:complexType>
+    <xs:complexType name="TrackerServer001">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="add">
+                <xs:complexType>
+                    <xs:attribute name="IP" type="xs:string" use="required" />
+                    <xs:attribute name="Port" type="xs:int" use="optional" default="22122" />
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="BusinessType001">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="add">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element name="GroupMapping" type="GroupMapping001" minOccurs="0" maxOccurs="1"/>
+                    </xs:all>
+                    <xs:attribute name="BusinessTypeName" type="xs:string" use="required" />
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="GroupMapping001">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="add">
+                <xs:complexType>
+                    <xs:attribute name="Group" type="xs:string" use="required" />
+                    <xs:attribute name="InsideUrlHeader" type="xs:string" use="required" />
+                    <xs:attribute name="OutsideUrlHeader" type="xs:string" use="required" />
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:simpleType name="StyleEnum">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="extjs" />
+            <xs:enumeration value="bootstrap" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ThemeEnum">
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:NMTOKEN">
+                    <xs:enumeration value="classic" />
+                    <xs:enumeration value="red" />
+                    <xs:enumeration value="gray" />
+                    <xs:enumeration value="crisp" />
+                    <xs:enumeration value="neptune" />
+                  <xs:enumeration value="triton" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base="xs:string" />
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+    <xs:simpleType name="NoRightEnum">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="Invisible" />
+            <xs:enumeration value="Disable" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StorageEnum">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="Local" />
+            <xs:enumeration value="Database" />
+            <xs:enumeration value="DFS" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="BoolEnum">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="false" />
+            <xs:enumeration value="true" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
